@@ -1,0 +1,182 @@
+[
+    {
+        "id": "e86b184fcaef8d37",
+        "type": "tab",
+        "label": "Flow 2",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "24e54acf7ea885cc",
+        "type": "alexa-home",
+        "z": "e86b184fcaef8d37",
+        "conf": "65912ad82f95ce34",
+        "device": "201995",
+        "acknoledge": false,
+        "name": "Sensor presencia",
+        "topic": "",
+        "x": 820,
+        "y": 540,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "059b3e1eee37a38b",
+        "type": "mqtt in",
+        "z": "e86b184fcaef8d37",
+        "name": "",
+        "topic": "Sensores/PIR",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "48109835b69c2135",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 190,
+        "y": 100,
+        "wires": [
+            [
+                "b28a31a0a64e675a"
+            ]
+        ]
+    },
+    {
+        "id": "202867c9a0883654",
+        "type": "debug",
+        "z": "e86b184fcaef8d37",
+        "name": "debug 14",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 440,
+        "y": 540,
+        "wires": []
+    },
+    {
+        "id": "b28a31a0a64e675a",
+        "type": "function",
+        "z": "e86b184fcaef8d37",
+        "name": "Presencia detectada",
+        "func": "\nif (msg.payload.Presencia == false) {\n    msg.payload = \"false\";\n} else {\n    msg.payload = \"true\";\n}\n\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 260,
+        "y": 200,
+        "wires": [
+            [
+                "4bd409a24603e49f"
+            ]
+        ]
+    },
+    {
+        "id": "4bd409a24603e49f",
+        "type": "function",
+        "z": "e86b184fcaef8d37",
+        "name": "Mensaje a telegram",
+        "func": "\nif (msg.payload== \"true\") {\n\n    msg.payload = {};\n    msg.payload.chatId = -701111339;\n    msg.payload.type = \"message\";\n    var espacio = \" \\n\";\n    msg.payload.content = \"Presencia detectada en el sensor 1\"\n    \n    return msg;\n\n} else {\n    msg.payload = {};\n    \n    return msg;\n\n}\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n//if (msg.payload.content == \"true\") {\n//    msg.payload = {};\n//    msg.payload.chatId = -701801339, 5394149901;\n//    msg.payload.type = 'message';\n//    msg.payload.content =  \"Se encendió el foco\";\n//    return msg;\n//}\n\n//else if (msg.payload.content == \"false\") {\n\n//    msg.payload = {};\n//    msg.payload.chatId = -701801339, 5394149901;\n//    msg.payload.type = 'message';\n//    msg.payload.content = \"Se apagó el foco\";\n//    return msg;\n//}",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 310,
+        "y": 300,
+        "wires": [
+            [
+                "39efbf509fa019e7"
+            ]
+        ]
+    },
+    {
+        "id": "39efbf509fa019e7",
+        "type": "telegram sender",
+        "z": "e86b184fcaef8d37",
+        "name": "",
+        "bot": "b4f1919039f67485",
+        "haserroroutput": false,
+        "outputs": 1,
+        "x": 370,
+        "y": 420,
+        "wires": [
+            [
+                "202867c9a0883654"
+            ]
+        ]
+    },
+    {
+        "id": "692733608c1b1f44",
+        "type": "alexa-home-resp",
+        "z": "e86b184fcaef8d37",
+        "x": 800,
+        "y": 480,
+        "wires": []
+    },
+    {
+        "id": "65912ad82f95ce34",
+        "type": "alexa-home-conf",
+        "username": "raymundo_nr"
+    },
+    {
+        "id": "48109835b69c2135",
+        "type": "mqtt-broker",
+        "name": "DHT_11",
+        "broker": "localhost",
+        "port": "1883",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "b4f1919039f67485",
+        "type": "telegram bot",
+        "botname": "relay_bot",
+        "usernames": "",
+        "chatids": "-701801339",
+        "baseapiurl": "",
+        "updatemode": "polling",
+        "pollinterval": "300",
+        "usesocks": false,
+        "sockshost": "",
+        "socksprotocol": "socks5",
+        "socksport": "6667",
+        "socksusername": "anonymous",
+        "sockspassword": "",
+        "bothost": "",
+        "botpath": "",
+        "localbotport": "8443",
+        "publicbotport": "8443",
+        "privatekey": "",
+        "certificate": "",
+        "useselfsignedcertificate": false,
+        "sslterminated": false,
+        "verboselogging": false
+    }
+]
