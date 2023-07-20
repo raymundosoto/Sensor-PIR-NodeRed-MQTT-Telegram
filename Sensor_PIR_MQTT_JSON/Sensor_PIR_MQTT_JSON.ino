@@ -7,7 +7,7 @@ const char* ssid = "Totalplay-319F_2.4Gnormal";
 const char* password = "319FEF5D88K2kS97";
 
 // Configuración de MQTT
-const char* mqtt_server = "192.168.100.137";  // Dirección IP del broker MQTT local
+const char* mqtt_server = "192.168.xxx.xxx";  // Dirección IP del broker MQTT local
 const int mqtt_port = 1883;                  // Puerto del broker MQTT
 const char* mqtt_topic = "Sensores/PIR";     // Tópico MQTT para publicar los datos del sensor PIR
 
